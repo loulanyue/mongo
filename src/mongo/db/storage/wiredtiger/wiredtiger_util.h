@@ -149,6 +149,15 @@ public:
                                     BSONObjBuilder* bob);
 
     /**
+     * Fetches the operation statistics, converts those into a BSONObj and resets the statistics
+     * at the end.
+     */
+    static Status exportOperationStatsInfoToBSON(WT_SESSION* s,
+                                                 const std::string& uri,
+                                                 const std::string& config,
+                                                 BSONObjBuilder* bob);
+
+    /**
      * Gets entire metadata string for collection/index at URI with the provided session.
      */
     static StatusWith<std::string> getMetadataRaw(WT_SESSION* session, StringData uri);

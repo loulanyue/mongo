@@ -523,7 +523,24 @@ void WiredTigerRecoveryUnit::beginIdle() {
     }
 }
 
-// ---------------------
+BSONObj WiredTigerRecoveryUnit::getOperationStatistics() const {
+    BSONObjBuilder bob;
+    if (!_session)
+        return bob.obj();
+
+    WT_SESSION* s = _session->getSession();
+    invariant(s);
+
+    Status status = WiredTigerUtil::exportOperationStatsInfoToBSON(
+        s, "statistics:session", "statistics=(fast)", &bob);
+    if (!status.isOK()) {
+        bob.append("error", "unable to retrieve storage statistics");
+        bob.append("code", static_cast<int>(status.code()));
+        bob.append("reason", status.reason());
+    }
+
+    return bob.obj();
+}
 
 WiredTigerCursor::WiredTigerCursor(const std::string& uri,
                                    uint64_t tableId,

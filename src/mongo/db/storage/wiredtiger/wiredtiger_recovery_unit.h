@@ -110,6 +110,8 @@ public:
         _orderedCommit = orderedCommit;
     }
 
+    BSONObj getOperationStatistics() const override;
+
     // ---- WT STUFF
 
     WiredTigerSession* getSession();

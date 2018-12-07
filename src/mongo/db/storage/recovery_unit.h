@@ -214,6 +214,15 @@ public:
     }
 
     /**
+     * Fetches the storage level statistics.
+     */
+    virtual BSONObj getOperationStatistics() const {
+        return {};
+    }
+
+    /**
+     * The ReadSource indicates which exteral or provided timestamp to read from for future
+     * transactions.
      * When no read timestamp is provided to the recovery unit, the ReadSource indicates which
      * external timestamp source to read from.
      */
